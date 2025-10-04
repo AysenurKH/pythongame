@@ -1,0 +1,9 @@
+pylint==3.3.8
+flake8==7.3.0
+flake8-docstrings==1.7.0
+flake8-polyfill==1.0.2
+pdoc==15.0.4
+#sphinx==8.1.3 Too complex
+#graphviz==0.21 Doesn't seem to be needed?
+pytest==8.4.2
+pytest-cov==7.0.0
