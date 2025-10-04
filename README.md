@@ -179,4 +179,3 @@ delete the `venv` directory and re-generate it. This is handled automatically wi
 `$(VENV)/bin/activate` command, which in turn depends on the requirements.txt file, so the virtual environment is only regenerated when the requirements.txt file has been changed.
 
 #### Type hints (TODO: ??, how to enforce? Write something here)
-
