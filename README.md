@@ -11,7 +11,7 @@ This is a Python implementation of the dice game "Pig".
 ## How to run
 
 This project comes with a Makefile which should handle all necessary setup for you, and it allows you to generate documentation, uml diagrams, run tests, and more.
-Make needs to installed, and should probably be run from a UNIX termianl (Mac, Linux, or with tools like WSL in Windows)
+Make needs to installed, and should probably be run from a UNIX terminal (Mac, Linux, or with tools like WSL in Windows)
 
 Install Make and Graphviz on your computer. These are needed and are not installed automatically or by default.
 
