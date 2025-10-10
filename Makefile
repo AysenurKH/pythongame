@@ -13,7 +13,7 @@ $(VENV)/bin/activate: requirements.txt
 
 run: $(VENV)/bin/activate
 	## TODO: Use proper init/main/setup(?) naming
-	$(PYTHON) src/clazz.py
+	$(PYTHON) src/game.py
 
 clean:
 	rm -rf __pycache__

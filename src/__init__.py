@@ -1,1 +1,1 @@
-"""Python Game."""
+"""Pig (Dice Game)."""

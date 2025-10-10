@@ -4,7 +4,7 @@
 
 ### Game
 
-Some info about the game
+This is a Python implementation of the dice game "Pig". 
 
 ---
 
