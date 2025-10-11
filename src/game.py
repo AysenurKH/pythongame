@@ -1,13 +1,21 @@
 import cmd
-import sys
-from player import Player  # We need to import the class from the file. Importing the file "player" is not enough
-from dice_hand import DiceHand
-from die import Die
+from src.die import Die
+from src.player import Player
 
+RULES = """
+Welcome to the Dice game "Pig".
+This game is played with 2 players. You can play against a friend, or against the computer.
+Player 1 starts.
+Keep rolling one die at a time and sum the value of each throw. 
+At any point, you can decide to stop rolling dice, and the points you've collected so far in this round are 
+added to your score.
+If you roll a 1 though, your turn ends and you do not get to keep these points. 
+Once your turn ends, it's player 2's turn. Once their turn ends, it's your turn again, and so on.
+First player to reach 100 points wins.
+"""
 
 # TODO: Maybe find a better place to put all this game logic, and keep the input/cmd separate?
 # TODO: Implement Cheat
-# TODO: Write proper rules. Maybe as string block?
 # TODO: Implement some intelligence and use it instead of asking for input, if playing against computer
 # TODO: Docstrings
 # TODO: Tests
@@ -18,8 +26,12 @@ from die import Die
 # TODO: Implement a loop that re-runs the game once it has been won/lost
 # TODO: Show total score AND your current hand (maybe with number and dice)
 # BUG: Seems that the dice_hand is not really cleared and is re-used by both players?
+# TODO: Fix Makefile with either SINGLE SHELL or that youtube video that has the venv activation function as a make-target?
 
 class Game(cmd.Cmd):
+    """Here is a test or two.
+    """
+
     intro = "Welcome to the Pig dice game.   Type help or ? to list commands.\n"
     prompt = "Input: "
 
@@ -30,6 +42,7 @@ class Game(cmd.Cmd):
     player1s_turn = True
 
     def __init__(self):
+        """Constructor."""
         super(Game, self).__init__()
 
     def do_play(self, arg):
@@ -43,8 +56,8 @@ class Game(cmd.Cmd):
         self.player2 = Player(name_player2)
         self.game_loop()
 
-    def do_rules(self):
-        print("These are the rules")
+    def do_rules(self, arg):
+        print(RULES)
 
     def do_changename(self, arg):
         self.player.set_name(arg)
@@ -56,8 +69,8 @@ class Game(cmd.Cmd):
         """Clear the screen and return turtle to center:  RESET"""
         pass
 
-    def do_bye(self):
-        """Stop recording, close the turtle window, and exit:  BYE"""
+    def do_quit(self, arg):
+        """Quits the game."""
         print('Thank you for using Turtle')
         return True
 

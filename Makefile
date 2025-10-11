@@ -1,3 +1,5 @@
+.ONESHELL:
+
 .PHONY: run clean doc test
 
 VENV = venv
@@ -12,8 +14,8 @@ $(VENV)/bin/activate: requirements.txt
 	$(PIP) install -r requirements.txt
 
 run: $(VENV)/bin/activate
-	## TODO: Use proper init/main/setup(?) naming
-	$(PYTHON) src/game.py
+	## Needs to be run as a module because I am using modules. Running "$(PYTHON) src/game.py" would cause an error stating that module src cannot be found
+	$(PYTHON) -m src.game
 
 clean:
 	rm -rf __pycache__
@@ -23,7 +25,8 @@ clean:
 	rm -f .coverage
 
 doc: $(VENV)/bin/activate
-	$(PYTHON) -m pdoc -html src -o $(APIDOC)
+	. $(VENV)/bin/activate; \
+	pdoc -html src -o $(APIDOC)
 
 test: $(VENV)/bin/activate
 	. $(VENV)/bin/activate; \

@@ -1,4 +1,4 @@
-from dice_hand import DiceHand
+from src.dice_hand import DiceHand
 
 
 class Player:
