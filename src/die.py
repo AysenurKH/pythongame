@@ -7,8 +7,9 @@ class Die:
 
     value = None
 
-    def __init__(self):
-        pass
+    def __init__(self, value=None):
+        if value:
+            self.value = value
 
     def roll(self):
         self.value = random.randint(1, 6)
