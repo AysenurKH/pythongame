@@ -21,7 +21,10 @@ class Player:
         self.dice_hand.empty()
 
     def get_roll_dice_choice(self, opponent):
-        return input("Want to roll another die? (y/n)")
+        choice = None
+        while not choice or choice.lower() not in ("y", "n", "q"):
+            choice = input("Want to roll another die? (y/n). Or type q if you would like to surrender.")
+        return choice
 
     def reset(self):
         self.empty_dice_hand()

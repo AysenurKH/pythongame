@@ -25,9 +25,8 @@ First player to reach 100 points wins.
 # It's not clear whether I should just store "player1's score" and keep updating it every game no matter what the name of the player is, or if different names should count as separate players and their scores are kept separate in the file..
 # TODO: Fix Makefile with either SINGLE SHELL or that youtube video that has the venv activation function as a make-target?
 # TODO: Consider just creating a new Game object whenever we play a game. Then we don't need to reset everything in between games
-# TODO: Make it possible to quit the game in the middle of a round
 # TODO: Update README with things like Computer Intelligence
-
+# TOdO: Add black dependency and create new make target
 class Game(cmd.Cmd):
     """Here is a test or two.
     """
@@ -97,8 +96,7 @@ class Game(cmd.Cmd):
                 self.handle_player_turn(self.player1, self.player2)
             else:
                 self.handle_player_turn(self.player2, self.player1)
-        (winning_player, losing_player) = (self.player1, self.player2) if self.player1.score >= 100 else (
-            self.player2, self.player1)
+        (winning_player, losing_player) = (self.player1, self.player2) if self.player1.score >= 100 else (self.player2, self.player1)
         print(f"The winner is {winning_player.name}")
         print("Thank you for playing!")
         self.persist_win(winning_player, losing_player)
@@ -111,6 +109,10 @@ class Game(cmd.Cmd):
             print(f"\nYour total score is {player.score}.")
             print(f"You are currently holding {player.dice_hand} (value: {player.dice_hand.get_value()})")
             choice = player.get_roll_dice_choice(opponent)
+            if choice.lower() == "q":
+                print("You decided to surrender the game. This counts as a loss.")
+                opponent.increment_score(100)
+                break
             if choice.lower() == "n":
                 print(f"You decided to stop rolling. Adding {player.dice_hand.get_value()} to your score.")
                 player.increment_score(player.dice_hand.get_value())

@@ -1,5 +1,6 @@
 from src.player import Player
 import random
+from time import sleep
 
 
 class Intelligence(Player):
@@ -8,6 +9,8 @@ class Intelligence(Player):
         self.computer_difficulty = computer_difficulty
 
     def get_roll_dice_choice(self, opponent):
+        # Sleep 1 second between each die roll to make the terminal output more natural
+        sleep(1)
         if self.computer_difficulty == 1:
             return self.roll_dice_easy()
         elif self.computer_difficulty == 2:
