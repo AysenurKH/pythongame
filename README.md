@@ -1,5 +1,6 @@
-# TODO: Finish Tests
-# TODO: docs and lint in the test module
+# TODO: Prepare what to say for video
+# TODO: Any way to "fake" user input in tests?
+# TODO: Move test to different folder and avoid all the module trouble
 
 # Python Game
 

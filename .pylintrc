@@ -98,8 +98,11 @@ enable=
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 
-# It complains about the built-in "input()" function
-disable=W0141
+disable=
+    # It complains about the built-in "input()" function
+    W0141,
+    # Ignore unnecessary pass statements, as there are several of these in the tests
+    W0107
 
 
 [REPORTS]
