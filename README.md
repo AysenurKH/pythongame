@@ -1,3 +1,6 @@
+# TODO: Finish Tests
+# TODO: docs and lint in the test module
+
 # Python Game
 
 ## About this project
@@ -5,6 +8,14 @@
 ### Game
 
 This is a Python implementation of the dice game "Pig". 
+
+You can play either as 2 players against each other, or one player against the computer.
+
+The computer has 3 difficulty settings.
+
+- Easy: Stops rolling dice at random, if it has any points at all that round.
+- Medium: Stops rolling dice at random, if it has more than 20 points that round.
+- Hard: Uses the [near-optimal **End race or keep pace** strategy](https://en.wikipedia.org/wiki/Pig_(dice_game)#Optimal_play) that takes both your scores into consideration
 
 ---
 
@@ -50,6 +61,10 @@ Runs the full test suite.
 `make coverage`
  
 Displays the full test coverage report.
+
+`make black`
+
+Formats the project with the [Black](https://github.com/psf/black) formatter
 
 ---
 
@@ -147,9 +162,9 @@ If both a warning and a conventional message is issued, it would return error 20
 Pylint is configured via the .pylintrc configuration file, as per the `--rcfile` flag when invoking pylint. It can be left empty to use the default configuration. 
 For demonstration purposes, I just copy pasted a configuration file from the internet, and made some changes, but it can of course be further customized.
 
-#### Flake8
+Specific checks can be disabled in the `.pylintrc` file, which I have done.
 
-(TODO: Don't really know why we are using both Flake8 and Pylint, and if Flake8 does anything by itself without extensions?)
+#### Flake8
 
 Flake8 is a linter that supports various extensions that check different things. I am using flake8-docstrings to check docstrings, which is installed in the virtual environment.
 
@@ -159,7 +174,7 @@ Flake8 is smart enough that it can auto-detect the .flake8 configuration file, a
 selected the .flake8 file location and src directory in the call to flake8 in the Makefile.
 
 Flake8 uses the concept of "error codes". Each error has a specific error code associated with it. For example, error code `D404` is returned when a
-docstring starts with the word "this". For the sake of demonstration, I have excluded this specific error code in the .flake8 configuration file.
+docstring starts with the word "this". I have excluded this specific error code in the .flake8 configuration file, as well as a few others.
 
 ### Virtual environment & dependencies
 
@@ -178,4 +193,6 @@ If I need to install, uninstall or change the version of dependencies, I can eas
 delete the `venv` directory and re-generate it. This is handled automatically with the Makefile, because the various targets depend on the
 `$(VENV)/bin/activate` command, which in turn depends on the requirements.txt file, so the virtual environment is only regenerated when the requirements.txt file has been changed.
 
-#### Type hints (TODO: ??, how to enforce? Write something here)
+#### Type hints
+
+At the moment, I am not using type hints. 

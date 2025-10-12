@@ -1,5 +1,9 @@
 [flake8]
-extend-ignore = D404
+extend-ignore =
+    # "First word of the docstring should not be This."
+    D404,
+    # "First line should be in imperative mood."
+    D401
 exclude =
     # No need to traverse our git directory
     .git,

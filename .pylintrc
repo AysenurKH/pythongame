@@ -98,18 +98,8 @@ enable=
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 
-# disable=
-    attribute-defined-outside-init,
-    invalid-name,
-    missing-docstring,
-    protected-access,
-    too-few-public-methods,
-    # handled by black
-    format,
-    # We anticipate #3512 where it will become optional
-    fixme,
-    cyclic-import,
-    import-error,
+# It complains about the built-in "input()" function
+disable=W0141
 
 
 [REPORTS]

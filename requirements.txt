@@ -7,3 +7,4 @@ pdoc==15.0.4
 #graphviz==0.21 Doesn't seem to be needed?
 pytest==8.4.2
 pytest-cov==7.0.0
+black==25.9.0

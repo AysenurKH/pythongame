@@ -1,6 +1,6 @@
 .ONESHELL:
 
-.PHONY: run clean doc test
+.PHONY: run clean doc test black
 
 VENV = venv
 PYTHON = $(VENV)/bin/python3
@@ -14,8 +14,8 @@ $(VENV)/bin/activate: requirements.txt
 	$(PIP) install -r requirements.txt
 
 run: $(VENV)/bin/activate
-	## Needs to be run as a module because I am using modules. Running "$(PYTHON) src/game.py" would cause an error stating that module src cannot be found
-	$(PYTHON) -m src.game
+	## Needs to be run as a module because I am using modules. Running "$(PYTHON) src/pig_dice_game.py" would cause an error stating that module src cannot be found
+	$(PYTHON) -m src.pig_dice_game
 
 clean:
 	rm -rf __pycache__
@@ -46,5 +46,9 @@ lint: $(VENV)/bin/activate
 	. $(VENV)/bin/activate; \
 	pylint --rcfile=.pylintrc src; \
 	flake8 --config=.flake8 src
+
+black: $(VENV)/bin/activate
+	. $(VENV)/bin/activate; \
+	black src
 
 build: $(VENV)/bin/activate lint test uml doc
