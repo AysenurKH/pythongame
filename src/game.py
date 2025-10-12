@@ -1,7 +1,9 @@
 import cmd
+import os
 from src.die import Die
 from src.player import Player
 from src.intelligence import Intelligence
+from src.high_score import HighScore, from_persisted_line
 
 RULES = """
 Welcome to the Dice game "Pig".
@@ -15,15 +17,16 @@ Once your turn ends, it's player 2's turn. Once their turn ends, it's your turn 
 First player to reach 100 points wins.
 """
 
+
 # TODO: Maybe find a better place to put all this game logic, and keep the input/cmd separate?
 # TODO: Docstrings
 # TODO: Tests
 # TODO: Add better error handlng (like handling bad/unexpected inputs)
-# TODO: Add some file that can be written and read, which contains the amount of games played by the player.
 # It's not clear whether I should just store "player1's score" and keep updating it every game no matter what the name of the player is, or if different names should count as separate players and their scores are kept separate in the file..
 # TODO: Fix Makefile with either SINGLE SHELL or that youtube video that has the venv activation function as a make-target?
-# TODO: Error handling for name change (only allow if players already have names, and validate input)
-# TODO: Don't ask players for their name again in round 2 and later
+# TODO: Consider just creating a new Game object whenever we play a game. Then we don't need to reset everything in between games
+# TODO: Make it possible to quit the game in the middle of a round
+# TODO: Update README with things like Computer Intelligence
 
 class Game(cmd.Cmd):
     """Here is a test or two.
@@ -53,8 +56,24 @@ class Game(cmd.Cmd):
 
     def do_changename(self, arg):
         """Set name of player."""
-        (player_number, new_name) = arg.split()
+        try:
+            player_number = int(arg)
+        except ValueError:
+            print("player number must be an integer")
+            return
+
+        if player_number not in (1, 2):
+            print("The player number must be either 1 or 2")
+            return
+
         player = self.player1 if player_number == 1 else self.player2
+
+        if not player:
+            print(f"Player {player_number} does not exist. Play a game first")
+            return
+
+        print(f"Renaming {player.name}..")
+        new_name = self.get_name_from_player(player_number)
         current_name = player.name
         player.set_name(new_name)
         print(f"Player {current_name} has changed name to {new_name}")
@@ -67,10 +86,6 @@ class Game(cmd.Cmd):
             self.player1.dice_hand.add_die(Die(3))
         self.game_loop()
 
-    def do_reset(self, arg):
-        """Clear the screen and return turtle to center:  RESET"""
-        pass
-
     def do_quit(self, arg):
         """Quits the game."""
         print('Thank you for using Turtle')
@@ -82,8 +97,12 @@ class Game(cmd.Cmd):
                 self.handle_player_turn(self.player1, self.player2)
             else:
                 self.handle_player_turn(self.player2, self.player1)
-        print(f"The winner is {self.player1.name if self.player1.score >= 100 else self.player2.name}")
+        (winning_player, losing_player) = (self.player1, self.player2) if self.player1.score >= 100 else (
+            self.player2, self.player1)
+        print(f"The winner is {winning_player.name}")
         print("Thank you for playing!")
+        self.persist_win(winning_player, losing_player)
+        self.reset_game()
         print(self.intro)
 
     def handle_player_turn(self, player, opponent):
@@ -127,14 +146,64 @@ class Game(cmd.Cmd):
                 print("Pick a number between 1 and 3")
 
     def setup_game(self):
-        name_player1 = input("Player 1 name: ")
-        name_player2 = input("Player 2 name. Leave blank to play against the computer: ")
+        if self.player1 or self.player2:
+            # No need to ask players for their names if they have just played a game previously
+            return
+        name_player1 = self.get_name_from_player(1)
         self.player1 = Player(name_player1)
-        self.play_against_computer = not name_player2
+
+        self.play_against_computer = self.yes_no_prompt("Play against computer? [y/n]")
         if self.play_against_computer:
             self.player2 = Intelligence("Computer", self.get_difficulty())
         else:
+            name_player2 = self.get_name_from_player(2)
             self.player2 = Player(name_player2)
+
+    def persist_win(self, winning_player, losing_player):
+        file_name = "highscore.txt"
+
+        # First load the existing high scores
+        high_scores = {}
+        if os.path.isfile(file_name):
+            with open(file_name, "r") as file:
+                for line in file:
+                    high_score = from_persisted_line(line)
+                    high_scores[high_score.name] = high_score
+
+        # Ensure both players exist in the dict
+        for player in (winning_player, losing_player):
+            high_scores.setdefault(player.name, HighScore(player.name))
+
+        # Next, update the stats for the winning player and losing player
+        high_scores[winning_player.name].increment_games_won()
+        for player in (winning_player, losing_player):
+            high_scores[player.name].increment_games_played()
+
+        # Finally, store it all back in the file
+        with open(file_name, "w") as file:
+            for high_score in high_scores.values():
+                # You can print to files, while specifying line separator. This avoids a linebreak at the end of the file, causing an empty line at the bottom
+                # the HighScore class overrides the __str__ method, which formats the high score correctly in the file.
+                print(high_score, sep=os.linesep, file=file)
+
+    def get_name_from_player(self, player_number):
+        name = None
+        while not name:
+            name = input(f"Player {player_number} name: ")
+            if not name:
+                print("Name must be a non-blank string")
+        return name
+
+    def yes_no_prompt(self, text):
+        choice = None
+        while not choice or choice.lower() not in ("y", "n"):
+            choice = input(text)
+        return choice.lower() == "y"
+
+    def reset_game(self):
+        self.player1.reset()
+        self.player2.reset()
+        self.player1s_turn = True
 
 
 if __name__ == '__main__':

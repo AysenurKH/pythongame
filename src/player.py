@@ -22,3 +22,7 @@ class Player:
 
     def get_roll_dice_choice(self, opponent):
         return input("Want to roll another die? (y/n)")
+
+    def reset(self):
+        self.empty_dice_hand()
+        self.score = 0
