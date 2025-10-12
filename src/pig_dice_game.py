@@ -9,6 +9,7 @@ from src.player import Player
 from src.intelligence import Intelligence
 from src.game import Game
 from src import high_score
+
 RULES = """
 Welcome to the Dice game "Pig".
 This game is played with 2 players. You can play against a friend, or against the computer.
@@ -138,7 +139,7 @@ class CommandListener(cmd.Cmd):
         -------
         - `bool:` True, which makes the Cmd module quit and stop listening for more commands.
         """
-        print('Thank you for playing Pig!')
+        print("Thank you for playing Pig!")
         return True
 
     def create_players(self):
@@ -226,5 +227,5 @@ def get_difficulty():
         print("Pick a number between 1 and 3")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     CommandListener().cmdloop()

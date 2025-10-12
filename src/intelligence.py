@@ -41,7 +41,11 @@ class Intelligence(Player):
 
     def roll_dice_easy(self):
         """If we have any points at all in this round, just decide randomly if we should stop."""
-        return "n" if self.dice_hand.get_value() > 0 and random.choice([True, False]) else "y"
+        return (
+            "n"
+            if self.dice_hand.get_value() > 0 and random.choice([True, False])
+            else "y"
+        )
 
     def roll_dice_medium(self):
         """Keep rolling until we have at least 20 points in the current round."""

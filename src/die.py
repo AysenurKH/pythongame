@@ -39,4 +39,4 @@ class Die:
         -------
         - `str:` The die symbol equivalent to the value of the rolled die. Example: ⚃
         """
-        return DICE[self.value-1] if self.value else "N/A"
+        return DICE[self.value - 1] if self.value else "N/A"

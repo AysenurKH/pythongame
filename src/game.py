@@ -68,14 +68,18 @@ class Game:
             if player.dice_hand.get_value == 0:
                 print("Your dice hand is currently empty")
             else:
-                print(f"You are currently holding {player.dice_hand} (value: {player.dice_hand.get_value()})")
+                print(
+                    f"You are currently holding {player.dice_hand} (value: {player.dice_hand.get_value()})"
+                )
             choice = player.get_roll_dice_choice(opponent)
             if choice.lower() == "q":
                 print("You decided to surrender the game. This counts as a loss.")
                 opponent.increment_score(100)
                 break
             if choice.lower() == "n":
-                print(f"You decided to stop rolling. Adding {player.dice_hand.get_value()} to your score.")
+                print(
+                    f"You decided to stop rolling. Adding {player.dice_hand.get_value()} to your score."
+                )
                 player.increment_score(player.dice_hand.get_value())
                 player.empty_dice_hand()
                 print(f"Your new score is {player.score}")
@@ -85,7 +89,9 @@ class Game:
                 value = die.roll()
                 print(f"You rolled {die} ({die.value})")
                 if value == 1:
-                    print("Too bad! You rolled 1 and forfeited your points. Your round has ended.")
+                    print(
+                        "Too bad! You rolled 1 and forfeited your points. Your round has ended."
+                    )
                     player.empty_dice_hand()
                     break
                 print(f"Added {die.value} to your current hand.")
