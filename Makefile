@@ -40,7 +40,7 @@ coverage: $(VENV)/bin/activate
 uml: $(VENV)/bin/activate
 	mkdir -p $(UML)
 	. $(VENV)/bin/activate; \
-	pyreverse -ASmy -o png -p "Python Game" -d $(UML) src
+	pyreverse -ASmy --ignore tests -o png -p "Python Game" -d $(UML) src
 
 lint: $(VENV)/bin/activate
 	. $(VENV)/bin/activate; \
