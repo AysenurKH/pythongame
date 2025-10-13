@@ -33,18 +33,19 @@ class Game:
         player1s_turn = True
         while self.player1.get_score() < 100 and self.player2.get_score() < 100:
             if player1s_turn:
-                self.handle_player_turn(self.player1, self.player2)
+                self.handle_player_turn(player=self.player1, opponent=self.player2)
             else:
-                self.handle_player_turn(self.player2, self.player1)
+                self.handle_player_turn(player=self.player2, opponent=self.player1)
             player1s_turn = not player1s_turn
 
         if self.player1.score >= 100:
-            (winning_player, losing_player) = (self.player1, self.player2)
+            print(f"The winner is {self.player1.name}")
+            high_score.persist_win(winning_player=self.player1, losing_player=self.player2)
         else:
-            (winning_player, losing_player) = (self.player2, self.player1)
-        print(f"The winner is {winning_player.name}")
+            print(f"The winner is {self.player2.name}")
+            high_score.persist_win(winning_player=self.player2, losing_player=self.player1)
+
         print("Thank you for playing!")
-        high_score.persist_win(winning_player, losing_player)
         self.player1.reset()
         self.player2.reset()
 

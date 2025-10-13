@@ -88,6 +88,8 @@ delete the `venv` directory and re-generate it. This is handled automatically wi
 
 ### Make
 
+I added `.PHONE = doc` to avoid a conflict with the "doc" folder in my project.
+
 You can install make on Windows with `winget install ezwinports.make` or by other means, but you still cannot run the other UNIX comands like `rm -rf`.
 For this reason, I recommend using a WSL terminal on Windows. 
 

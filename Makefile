@@ -1,6 +1,4 @@
-.ONESHELL:
-
-.PHONY: run clean doc test black
+.PHONY: doc
 
 VENV = venv
 PYTHON = $(VENV)/bin/python3
