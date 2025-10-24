@@ -19,13 +19,24 @@ The computer has 3 difficulty settings.
 ## How to run
 
 This project comes with a Makefile which should handle all necessary setup for you, and it allows you to generate documentation, uml diagrams, run tests, and more.
-`Make` needs to installed, and should probably be run from a UNIX terminal (Mac, Linux, or with tools like WSL in Windows)
-
-Install `Make` and `Graphviz` on your computer. These are needed and are not installed automatically or by default.
 
 It's not necessary to manually install any other dependencies, as this is handled automatically by the Makefile.
 
+If you have Windows: 
+- Install WSL on your computer. This can be done by opening the "WSL" program on your computer and following the instructions there.
+- In Powershell, run `wsl --install -d Ubuntu` to install the Ubuntu version of Linux in WSL
+- Open the "WSL" program on your computer. This opens a terminal which is running a Linux operating system. Run the following commands in there.
+- Run `sudo apt-get update` which allows you to download the following 3 dependencies
+- Run `sudo apt install make` which installs "make"
+- Run `sudo apt install graphviz` which installs "Graphviz"
+- Run `sudo apt install python3.12-venv` which allows you to use virtual environments in Python
+- Make sure this project is located in your WSL folder. Example: `\\wsl.localhost\Ubuntu\home\aysenur\school\pythongame`
+
 ### List of Make targets
+
+Run the following commands in your WSL terminal, in the root of this project.
+
+You might need to run `sudo make xxx` if you are not using an admin account in WSL.
 
 `make run` 
 
@@ -196,5 +207,6 @@ Flake8 uses the concept of "error codes". Each error has a specific error code a
 docstring starts with the word "this". I have excluded this specific error code in the .flake8 configuration file, as well as a few others.
 
 #### Type hints
+
 
 At the moment, I am not using type hints. 
